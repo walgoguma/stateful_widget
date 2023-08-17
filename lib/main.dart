@@ -12,40 +12,47 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-  List<int> numbers = [];
-
-  void onClicked() {
-    setState(() {
-      numbers.add(numbers.length);
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        backgroundColor: const Color(0xfff4eddb),
+      theme: ThemeData(
+        textTheme: const TextTheme(
+          titleLarge: TextStyle(
+            color: Colors.red,
+          ),
+        ),
+      ),
+      home: const Scaffold(
+        backgroundColor: Color(0xfff4eddb),
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text(
                 'Click Count',
-                style: TextStyle(
-                  fontSize: 30,
-                ),
-              ),
-              for (var n in numbers) Text('$n'),
-              IconButton(
-                iconSize: 40,
-                onPressed: onClicked,
-                icon: const Icon(
-                  Icons.add_box_rounded,
-                ),
-              )
+              MyLargeTitle(),
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class MyLargeTitle extends StatelessWidget {
+  const MyLargeTitle({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      'My Large Title',
+      style: TextStyle(
+        fontSize: 30,
+        //! 사용시 : Theme.of(context).textTheme.titleLarge.color가 확실히 존재함은 알려줌 (sure)
+        //color: Theme.of(context).textTheme.titleLarge!.color
+        //? 사용시: 만약 Theme.of(context).textTheme.titleLarge.color 가 존재한다면 사용하라는 의미
+        color: Theme.of(context).textTheme.titleLarge?.color,
       ),
     );
   }
